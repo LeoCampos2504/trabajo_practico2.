@@ -1,7 +1,9 @@
 package ar.edu.unju.fi.ejercicio4.main;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import ar.edu.unju.fi.ejercicio4.constantes.Posicion;
@@ -25,23 +27,38 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                	System.out.println("Introduce el nombre del jugador:");
-                    String nombre = scanner.next();
-                    System.out.println("Introduce el apellido del jugador:");
-                    String apellido = scanner.next();
-                    System.out.println("Introduce la fecha de nacimiento del jugador (formato: AAAA-MM-DD):");
-                    String fechaNacimientoStr = scanner.next();
-                    LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoStr);
-                    System.out.println("Introduce la nacionalidad del jugador:");
-                    String nacionalidad = scanner.next();
-                    System.out.println("Introduce la estatura del jugador:");
-                    double estatura = scanner.nextDouble();
-                    System.out.println("Introduce el peso del jugador:");
-                    double peso = scanner.nextDouble();
-                    System.out.println("Elige la posición del jugador (1-DELANTERO, 2-MEDIO, 3-DEFENSA, 4-ARQUERO):");
-                    int posicion = scanner.nextInt();
-                    Jugador jugador = new Jugador(nombre, apellido, fechaNacimiento, nacionalidad, estatura, peso, Posicion.values()[posicion - 1]);
-                    jugadores.add(jugador);
+                	 try {
+                	        System.out.println("Introduce el nombre del jugador:");
+                	        String nombre = scanner.next();
+                	        System.out.println("Introduce el apellido del jugador:");
+                	        String apellido = scanner.next();
+                	        System.out.println("Introduce la fecha de nacimiento del jugador (formato: AAAA-MM-DD):");
+                	        String fechaNacimientoStr = scanner.next();
+                	        LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoStr);
+                	        if (fechaNacimiento.isAfter(LocalDate.now())) {
+                	            throw new IllegalArgumentException("La fecha de nacimiento no puede ser en el futuro.");
+                	        }
+                	        System.out.println("Introduce la nacionalidad del jugador:");
+                	        String nacionalidad = scanner.next();
+                	        System.out.println("Introduce la estatura del jugador:");
+                	        double estatura = scanner.nextDouble();
+                	        System.out.println("Introduce el peso del jugador:");
+                	        double peso = scanner.nextDouble();
+                	        System.out.println("Elige la posición del jugador (1-DELANTERO, 2-MEDIO, 3-DEFENSA, 4-ARQUERO):");
+                	        int posicion = scanner.nextInt();
+                	        if (posicion < 1 || posicion > 4) {
+                	            throw new IllegalArgumentException("Por favor, elige una opción válida para la posición.");
+                	        }
+                	        Jugador jugador = new Jugador(nombre, apellido, fechaNacimiento, nacionalidad, estatura, peso, Posicion.values()[posicion - 1]);
+                	        jugadores.add(jugador);
+                	    } catch (DateTimeParseException e) {
+                	        System.out.println("Por favor, introduce una fecha válida en el formato AAAA-MM-DD.");
+                	    } catch (InputMismatchException e) {
+                	        System.out.println("Por favor, introduce un número válido.");
+                	        scanner.next();  
+                	    } catch (IllegalArgumentException e) {
+                	        System.out.println(e.getMessage());
+                	    }
                     break;
                 case 2:
                 	for (Jugador a : jugadores) {
@@ -49,17 +66,27 @@ public class Main {
                     }
                     break;
                 case 3:
-                	System.out.println("Introduce el nombre del jugador que quieres modificar:");
-                    String nombreMod = scanner.next();
-                    System.out.println("Introduce el apellido del jugador que quieres modificar:");
-                    String apellidoMod = scanner.next();
-                    for (Jugador a : jugadores) {
-                        if (a.getNombre().equals(nombreMod) && a.getApellido().equals(apellidoMod)) {
-                            System.out.println("Elige la nueva posición del jugador (1-DELANTERO, 2-MEDIO, 3-DEFENSA, 4-ARQUERO):");
-                            int nuevaPosicion = scanner.nextInt();
-                            a.setPosicion(Posicion.values()[nuevaPosicion - 1]);
-                        }
-                    }
+                	 try {
+                	        System.out.println("Introduce el nombre del jugador que quieres modificar:");
+                	        String nombreMod = scanner.next();
+                	        System.out.println("Introduce el apellido del jugador que quieres modificar:");
+                	        String apellidoMod = scanner.next();
+                	        for (Jugador jugador : jugadores) {
+                	            if (jugador.getNombre().equals(nombreMod) && jugador.getApellido().equals(apellidoMod)) {
+                	                System.out.println("Elige la nueva posición del jugador (1-DELANTERO, 2-MEDIO, 3-DEFENSA, 4-ARQUERO):");
+                	                int nuevaPosicion = scanner.nextInt();
+                	                if (nuevaPosicion < 1 || nuevaPosicion > 4) {
+                	                    throw new IllegalArgumentException("Por favor, elige una opción válida para la posición.");
+                	                }
+                	                jugador.setPosicion(Posicion.values()[nuevaPosicion - 1]);
+                	            }
+                	        }
+                	    } catch (InputMismatchException e) {
+                	        System.out.println("Por favor, introduce un número válido.");
+                	        scanner.next();  
+                	    } catch (IllegalArgumentException e) {
+                	        System.out.println(e.getMessage());
+                	    }
                     break;
                 case 4:
                 	   System.out.println("Introduce el nombre del jugador que quieres eliminar:");
