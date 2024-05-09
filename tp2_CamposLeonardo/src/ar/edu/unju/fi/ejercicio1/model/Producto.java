@@ -9,6 +9,7 @@ public class Producto {
     private double precioUnitario;
     private OrigenFabricacion origenFabricacion;
     private Categoria categoria;
+    private boolean estado;
     
     public Producto() {
 		
@@ -37,6 +38,13 @@ public class Producto {
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+	public String getNombre() {
+	    return descripcion;
+	}
+
+	public double getPrecio() {
+	    return precioUnitario;
 	}
 
 	public String getDescripcion() {
@@ -70,6 +78,16 @@ public class Producto {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+	public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+
+	
 	
 	
     
