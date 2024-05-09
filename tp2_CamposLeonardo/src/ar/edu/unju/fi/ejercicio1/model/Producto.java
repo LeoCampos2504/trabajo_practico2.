@@ -11,15 +11,22 @@ public class Producto {
     private Categoria categoria;
     private boolean estado;
     
-    public Producto() {
-		
-	}
+    public Producto(String descripcion, double precioUnitario, boolean estado) {
+        this.descripcion = descripcion;
+        this.precioUnitario = precioUnitario;
+        this.estado = estado;
+    }
     
-
-	@Override
-	public String toString() {
-		return "Producto [codigo=" + codigo + ", descripcion=" + descripcion + ", precioUnitario=" + precioUnitario
-				+ ", origenFabricacion=" + origenFabricacion + ", categoria=" + categoria + "]";
+    
+	public Producto(String i, String descripcion, double precioUnitario, OrigenFabricacion origenFabricacion,
+			Categoria categoria, boolean estado) {
+	
+		this.codigo = i;
+		this.descripcion = descripcion;
+		this.precioUnitario = precioUnitario;
+		this.origenFabricacion = origenFabricacion;
+		this.categoria = categoria;
+		this.estado = estado;
 	}
 
 
@@ -31,6 +38,13 @@ public class Producto {
 		this.origenFabricacion = origenFabricacion;
 		this.categoria = categoria;
 	}
+
+	@Override
+	public String toString() {
+		return "Producto [codigo=" + codigo + ", descripcion=" + descripcion + ", precioUnitario=" + precioUnitario
+				+ ", origenFabricacion=" + origenFabricacion + ", categoria=" + categoria + ", estado=" + estado + "]";
+	}
+
 
 	public String getCodigo() {
 		return codigo;
