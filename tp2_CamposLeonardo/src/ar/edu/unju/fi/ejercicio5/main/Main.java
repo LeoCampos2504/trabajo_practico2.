@@ -15,7 +15,7 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
 		ArrayList<Producto> productos = new ArrayList<>();
-		 for (int i = 0; i < 4; i++) {
+		 for (int i = 0; i < 15; i++) {
 			 Producto producto = new Producto();
 		        
 		        System.out.println("Ingrese los datos del producto " + (i+1) + ":");
